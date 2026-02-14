@@ -7,7 +7,7 @@ const posts = defineCollection({
     description: z.string().min(10),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    category: z.enum(['tech', 'review', 'log', 'pulse']),
+    category: z.enum(['tech', 'review', 'log', 'pulse', 'jobs']),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     canonicalURL: z.string().url().optional(),

@@ -58,6 +58,37 @@ aiSummary: "SOYO M4 PRO를 개봉하면서 패키지 상태, 구성, 본체 마�
 
 전면에 자주 쓰는 포트가 모여 있어서 실사용 동선이 괜찮다. 특히 USB 메모리나 무선 동글을 자주 꽂는 경우 접근성이 좋다.
 
+## 측면/후면/하단 디테일
+
+<figure>
+  <img src="/images/posts/2026-02-14-soyo-m4-pro-unboxing/06-side-vent.jpg" alt="SOYO M4 PRO 측면 통풍구" />
+  <figcaption>측면 통풍구. 타공 밀도가 높아 냉각 설계를 강조한 인상이다.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/posts/2026-02-14-soyo-m4-pro-unboxing/08-side-vent-2.jpg" alt="SOYO M4 PRO 반대편 측면 통풍구" />
+  <figcaption>반대편 측면도 유사한 타공 구조를 사용한다.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/posts/2026-02-14-soyo-m4-pro-unboxing/07-rear-io.jpg" alt="SOYO M4 PRO 후면 포트 구성" />
+  <figcaption>후면 I/O. 유선랜, USB, Type-C, HDMI 등 데스크 환경에 필요한 포트가 모여 있다.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/posts/2026-02-14-soyo-m4-pro-unboxing/09-bottom-label.jpg" alt="SOYO M4 PRO 하단 라벨" />
+  <figcaption>하단 라벨. 모델/전원 스펙(12V 3A), 기본 용량 표기를 다시 확인할 수 있다.</figcaption>
+</figure>
+
+## 동봉 구성품
+
+<figure>
+  <img src="/images/posts/2026-02-14-soyo-m4-pro-unboxing/10-included-accessories.jpg" alt="SOYO M4 PRO 동봉 구성품" />
+  <figcaption>동봉 구성품: 사용자 매뉴얼, 거치 브라켓/나사류, 전원 어댑터와 플러그 어댑터.</figcaption>
+</figure>
+
+구성품은 필요한 것만 담은 편이다. 기본 설치 후 바로 사용할 수 있는 구성이라 초기 셋업 진입은 어렵지 않다.
+
 ## 요약
 
-SOYO M4 PRO는 개봉 단계 기준으로는 "단순한 패키지 + 깔끔한 본체 마감"이 핵심 장점이다. 다음 글에서는 실제 부팅 이후 소음/온도/체감 성능 중심으로 이어서 정리할 예정이다.
+SOYO M4 PRO는 개봉 단계 기준으로 "단순한 패키지 + 깔끔한 본체 마감 + 실사용 포트 구성"이 핵심 장점이다. 다음 글에서는 실제 부팅 이후 소음/온도/체감 성능 중심으로 이어서 정리할 예정이다.

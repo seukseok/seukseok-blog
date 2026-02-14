@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ul class="list">
+  {posts.map((post) => (
+    <li>
+      <a href={`/posts/${post.slug}/`}>
+        <strong>{post.data.title}</strong>
+      </a>
+      <div class="meta">
+        <time datetime={post.data.pubDate.toISOString()}>
+          {post.data.pubDate.toLocaleDateString('ko-KR')}
+        </time>
+        <span> · {post.data.category}</span>
+      </div>
+      <p>{post.data.description}</p>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.3rem; }
+  .meta { color: #6b7280; font-size: 0.9rem; margin-top: 0.2rem; }
+  p { margin: 0.45rem 0 0; color: #374151; }
+</style>

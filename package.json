@@ -1,0 +1,19 @@
+{
+  "name": "seukseok-blog",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check:content": "node scripts/check-content.mjs",
+    "new:post": "node scripts/new-post.mjs",
+    "publish:post": "node scripts/publish-post.mjs",
+    "ci": "npm run check:content && npm run build"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.0",
+    "astro": "^5.17.1"
+  }
+}

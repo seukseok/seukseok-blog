@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+
+const categories = ['tech', 'review', 'log'] as const;
+
+export async function getStaticPaths() {
+  const categories = ['tech', 'review', 'log'];
+  return categories.map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params;
+if (!category || !categories.includes(category as (typeof categories)[number])) {
+  throw new Error('Invalid category');
+}
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft && data.category === category)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+---
+
+<BaseLayout title={`${category} | seukseok의 개인 블로그`} description={`${category} 카테고리 글 목록`}>
+  <h1>{category}</h1>
+  <PostList posts={posts} />
+</BaseLayout>

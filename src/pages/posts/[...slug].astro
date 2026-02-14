@@ -1,0 +1,45 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const canonical = post.data.canonicalURL ?? new URL(`/posts/${post.slug}/`, Astro.site).toString();
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  articleSection: post.data.category,
+  keywords: post.data.tags.join(', '),
+  inLanguage: 'ko',
+  url: canonical,
+};
+---
+
+<BaseLayout
+  title={`${post.data.title} | seukseok의 개인 블로그`}
+  description={post.data.description}
+  canonical={canonical}
+  image={post.data.coverImage}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article>
+    <h1>{post.data.title}</h1>
+    <p>
+      <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('ko-KR')}</time>
+      · <a href={`/categories/${post.data.category}/`}>{post.data.category}</a>
+    </p>
+    {post.data.aiSummary && <blockquote>{post.data.aiSummary}</blockquote>}
+    <Content />
+  </article>
+</BaseLayout>

@@ -1,0 +1,34 @@
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/seukseok-blog
+  branch: main
+
+media_folder: "public/images/posts"
+public_folder: "/images/posts"
+
+locale: "ko"
+site_url: "https://seukseok.dev"
+display_url: "https://seukseok.dev"
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false, format: "YYYY-MM-DD" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["tech", "review", "log"]
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: true }
+      - { label: "Canonical URL", name: "canonicalURL", widget: "string", required: false }
+      - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
+      - { label: "Cover Alt", name: "coverAlt", widget: "string", required: false }
+      - { label: "AI Summary", name: "aiSummary", widget: "text", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

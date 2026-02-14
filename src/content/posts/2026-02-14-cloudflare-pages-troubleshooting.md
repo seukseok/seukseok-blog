@@ -1,80 +1,66 @@
 ---
 title: "Cloudflare Pages 배포 트러블슈팅: Workers 화면에 들어갔을 때"
-description: "Astro 블로그를 Cloudflare에 올리면서 자주 막히는 포인트(Workers/Pages 경로 혼동, 빌드 설정, GitHub SSH 인증)를 실제 흐름으로 정리"
+description: "Astro 블로그 배포 중 Workers/Pages 경로 혼동, 빌드 설정, GitHub SSH 인증 이슈를 실제 해결 흐름으로 정리"
 pubDate: 2026-02-14
 category: "tech"
 tags: ["Cloudflare Pages", "Astro", "GitHub", "Troubleshooting"]
 draft: false
 coverImage: "/images/posts/cloudflare-pages-troubleshooting/cover.png"
 coverAlt: "Cloudflare Pages 배포 설정 화면"
-aiSummary: "Workers 경로로 들어가 Deploy command가 필수로 뜨는 문제를 Pages 경로로 전환해 해결하고, GitHub SSH 인증 후 정상 배포했다."
+aiSummary: "Workers 경로에서 막히는 문제를 Pages 플로우로 전환해 해결했고, SSH 인증 후 정상 배포를 완료했다."
 ---
 
-이번 글은 `seukseok.dev`를 실제로 배포하면서 겪은 문제를 기준으로 정리한 기록입니다.
-핵심은 단순합니다. **블로그(정적 사이트)는 Workers가 아니라 Pages 플로우로 배포**해야 합니다.
+## 한 줄 결론
 
-## 문제 1) 배포 화면에서 Deploy command가 필수로 뜸
+Cloudflare에 블로그를 올릴 때 `Deploy command`가 필수로 뜨면 거의 100% Workers 화면으로 들어간 상태다.
 
-증상:
-- `Deploy command` 입력란이 필수로 표시됨
-- `npx wrangler ...` 같은 Workers 배포 형태가 유도됨
+## 문제와 배경
 
-원인:
-- `Workers & Pages` 메뉴 안에서도 Workers 생성 흐름으로 들어간 상태
+`seukseok.dev` 블로그를 배포하는 과정에서 설정값을 넣어도 계속 배포가 막혔다. 특히 `Deploy command`를 강제로 요구하는 화면이 반복되어 진행이 안 됐다.
 
-해결:
+## 원인 분석
+
+원인은 경로 혼동이었다.
+
+- `Workers & Pages` 메뉴에서 **Workers 생성 플로우**로 진입
+- 정적 블로그에 맞는 **Pages 배포 플로우**가 아니었음
+
+## 해결 과정
+
+해결 방법은 아래 순서로 정리된다.
+
 1. 현재 화면에서 뒤로 이동
-2. 하단의 `Looking to deploy Pages? Get started` 클릭
-3. `Pages -> Continue with GitHub` 경로로 재진입
+2. 하단 `Looking to deploy Pages? Get started` 클릭
+3. `Pages -> Continue with GitHub`로 재진입
+4. 빌드 설정 입력
+   - Build command: `npm run build`
+   - Build output directory: `dist`
 
-## 문제 2) Pages 설정값을 무엇으로 넣어야 하나
+## 추가 이슈: GitHub push 인증 실패
 
-Astro 기준 최소 정답:
+HTTPS push 시 인증 오류가 발생했다. 이 부분은 SSH로 전환해 해결했다.
 
-- Production branch: `main`
-- Build command: `npm run build`
-- Build output directory: `dist`
-- Root directory: 비움(기본)
+```bash
+ssh-keygen -t ed25519 -C "seukseok@github" -f ~/.ssh/id_ed25519
+ssh -T git@github.com
+git remote set-url origin git@github.com:seukseok/seukseok-blog.git
+git push -u origin main
+```
 
-참고:
-- `Build output directory`를 `/`로 두면 오동작 가능성이 높습니다.
-- `Deploy command`는 Pages에서 필요하지 않습니다.
+주의할 점:
+- GitHub에 등록할 값은 fingerprint가 아니라 `id_ed25519.pub`의 `ssh-ed25519 ...` 한 줄 전체다.
 
-## 문제 3) GitHub push 인증 실패
-
-증상:
-- HTTPS push 시 인증 실패 (`could not read Username ...`)
-
-해결(SSH 권장):
-1. SSH 키 생성
-   ```bash
-   ssh-keygen -t ed25519 -C "seukseok@github" -f ~/.ssh/id_ed25519
-   ```
-2. 공개키 등록 (`~/.ssh/id_ed25519.pub` 내용 전체)
-3. 연결 확인
-   ```bash
-   ssh -T git@github.com
-   ```
-4. 원격을 SSH로 변경 후 push
-   ```bash
-   git remote set-url origin git@github.com:seukseok/seukseok-blog.git
-   git push -u origin main
-   ```
-
-중요:
-- GitHub에 넣는 값은 fingerprint(SHA256...)가 아니라 `ssh-ed25519 AAAA...` 형태의 공개키 한 줄입니다.
-
-## 결과
+## 검증
 
 - `seukseok-blog.pages.dev` 배포 성공
-- `seukseok.dev` 커스텀 도메인 연결 완료
-- 모바일/데스크탑에서 반응형 표시 정상 확인
+- `seukseok.dev` 도메인 연결 완료
+- 모바일/데스크탑 모두 정상 표시 확인
 
-## 재발 방지 체크리스트
+## 요약
 
-- 시작 경로가 Pages인지 먼저 확인
-- Build command/output directory를 템플릿대로 고정
-- SSH 인증을 먼저 끝내고 push
-- 배포 성공 후 custom domain 연결
+같은 문제를 줄이려면 이 네 가지만 먼저 확인하면 된다.
 
-이 과정을 한 번 템플릿화해두면, 이후 새 블로그/랜딩 페이지도 거의 같은 방식으로 10~20분 안에 배포할 수 있습니다.
+- Pages 경로로 들어갔는지
+- Build command가 `npm run build`인지
+- Output directory가 `dist`인지
+- GitHub 인증을 SSH로 안정화했는지

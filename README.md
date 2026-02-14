@@ -4,9 +4,7 @@ Astro 기반 정적(Static-first) 개인 블로그입니다. 한국어 콘텐츠
 
 ## 핵심 특징
 - 정적 사이트 + 빠른 렌더링
-- 크롤러/AI 친화: canonical, sitemap, robots, JSON-LD
 - 사람이 쓰기 쉬운 Markdown + Decap CMS(/admin)
-- 에이전트 자동 작성 친화: 고정 frontmatter 스키마 + 생성/배포 스크립트
 
 ## 로컬 실행
 ```bash

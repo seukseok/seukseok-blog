@@ -16,7 +16,7 @@ aiSummary: "ROS 1 지원 종료 맥락에서, 로보틱스 조직의 경쟁력�
 
 <figure>
   <img src="/images/posts/2026-02-14-pulse-ros-migration-readiness/cover.png" alt="ROS 공식 로고 이미지" />
-  <figcaption>대표 이미지는 자체 제작, 내용 참고 출처: ROS Blog (https://www.ros.org/blog/noetic-eol/)</figcaption>
+  <figcaption>이미지 출처: ROS Blog (https://www.ros.org/blog/noetic-eol/)</figcaption>
 </figure>
 
 ## 문제와 배경

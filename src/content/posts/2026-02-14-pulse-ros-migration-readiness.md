@@ -14,9 +14,10 @@ aiSummary: "ROS 1 지원 종료 맥락에서, 로보틱스 조직의 경쟁력�
 
 로보틱스/임베디드 팀의 다음 1년은 새 기능 경쟁보다, ROS 전환을 얼마나 안정적으로 끝내는지가 더 중요하다.
 
-![ROS 공식 이미지](/images/posts/2026-02-14-pulse-ros-migration-readiness/cover.png)
-
-_이미지 출처: ROS Blog (https://www.ros.org/blog/noetic-eol/)_
+<figure>
+  <img src="/images/posts/2026-02-14-pulse-ros-migration-readiness/cover.png" alt="ROS 공식 로고 이미지" />
+  <figcaption>이미지 출처: ROS Blog (https://www.ros.org/blog/noetic-eol/)</figcaption>
+</figure>
 
 ## 문제와 배경
 

@@ -3,10 +3,10 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostList from '../../components/PostList.astro';
 
-const categories = ['tech', 'review', 'log'] as const;
+const categories = ['tech', 'review', 'log', 'pulse'] as const;
 
 export async function getStaticPaths() {
-  const categories = ['tech', 'review', 'log'];
+  const categories = ['tech', 'review', 'log', 'pulse'];
   return categories.map((category) => ({ params: { category } }));
 }
 

@@ -38,8 +38,22 @@ const jsonLd = {
     <p>
       <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('ko-KR')}</time>
       · <a href={`/categories/${post.data.category}/`}>{post.data.category}</a>
+      · 조회수 <span id="post-view-count">-</span>
     </p>
     {post.data.aiSummary && <blockquote>{post.data.aiSummary}</blockquote>}
     <Content />
   </article>
+  <script is:inline>
+    (async () => {
+      try {
+        const path = location.pathname.replace(/\/$/, '') || '/';
+        const key = `${location.hostname.replace(/\./g, '-')}:post:${path}`;
+        const url = `https://api.countapi.xyz/hit/${encodeURIComponent(key)}/views`;
+        const res = await fetch(url, { method: 'GET' });
+        const data = await res.json();
+        const el = document.getElementById('post-view-count');
+        if (el && typeof data?.value === 'number') el.textContent = data.value.toLocaleString('ko-KR');
+      } catch (_) {}
+    })();
+  </script>
 </BaseLayout>

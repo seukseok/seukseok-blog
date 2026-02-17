@@ -37,6 +37,17 @@ sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
 
 이번 이슈는 QoS 맞춘 뒤 안정화됐다. 네트워크 튜닝보다 먼저 통신 계약(QoS)부터 맞추는 편이 시간을 훨씬 아낀다.
 
+
+## 그 주의 기술 이슈 (회고형)
+ROS 2 문서/배포판 릴리즈 노트에서 QoS 미스매치로 인한 sensor drop 경고가 계속 강조됐다.
+
+- ROS 2 QoS 개요
+  - https://docs.ros.org/en/rolling/Concepts/Intermediate/About-Quality-of-Service-Settings.html
+- Cyclone DDS 문서
+  - https://cyclonedds.io/docs/
+
+센서 파이프라인 문제는 대개 드라이버 버그로 보이지만, 실제로는 pub/sub 양쪽의 reliability/history 깊이 불일치가 원인인 경우가 많다. 특히 best-effort와 reliable 혼재는 실시간성/안정성 트레이드오프를 의도치 않게 만든다. 이 주차에 정리한 포인트는, 드롭률을 볼 때 패킷 수치만 보지 말고 QoS 협상 결과를 함께 캡처해야 한다는 점이었다.
+
 ## 참고
 - ROS 2 QoS 개념 문서
 - `rclcpp::SensorDataQoS` API

@@ -32,6 +32,17 @@ rm -rf build/Linux/Release/CMakeFiles
 
 성능 측정은 `perf`로 핫스팟만 확인했다. 모델별로 병목이 matmul인지 memory copy인지 다르니 옵션 최적화도 달라진다.
 
+
+## 그 주의 기술 이슈 (회고형)
+Linux kernel 안정화 릴리즈와 드라이버 수정이 연속 반영된 기간
+
+- Kernel.org releases
+  - https://www.kernel.org/
+- LWN kernel coverage
+  - https://lwn.net/Kernel/
+
+커널/드라이버 계층 이슈는 애플리케이션 로그에서 직접 드러나지 않아 원인 추적이 늦어진다. 그래서 런타임 문제를 볼 때도 dmesg, irq 통계, DMA 에러 카운터를 함께 보아야 한다. 특히 시리얼·네트워크·스토리지처럼 I/O 경계에서 발생하는 지연은 상위 스택 튜닝만으로 해결되지 않는 경우가 많다.
+
 ## 참고
 - ONNX Runtime build docs
 - GCC ARM options

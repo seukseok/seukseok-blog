@@ -26,6 +26,17 @@ west build -b nrf52840dk_nrf52840 app --pristine
 
 추가로 overlay config를 여러 개 쓸 때 `CONF_FILE` 순서를 고정하지 않으면 런타임 옵션이 뒤집히는 경우가 있다. 이건 CI에서 빌드 커맨드를 고정해두는 게 안전했다.
 
+
+## 주간 이슈 메모 (짧은 노트형)
+Node.js LTS 라인 업데이트 및 보안 패치 공지가 잦았던 구간
+
+- Node.js blog
+  - https://nodejs.org/en/blog
+- Node.js releases
+  - https://nodejs.org/en/about/previous-releases
+
+런타임 마이너 업데이트는 기능보다 ABI/네이티브 모듈 재빌드 이슈를 먼저 만든다. 그래서 배포 전에 N-API 모듈과 prebuild 바이너리 유무를 확인해야 롤백 비용을 줄일 수 있다. 현업에서는 앱 코드보다 빌드 캐시/아티팩트 호환성이 장애 시간을 좌우하는 경우가 많다.
+
 ## 참고
 - Zephyr west build 문서
 - Zephyr Kconfig guide

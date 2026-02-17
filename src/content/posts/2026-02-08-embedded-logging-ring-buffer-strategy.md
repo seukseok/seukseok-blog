@@ -21,6 +21,17 @@ aiSummary: "UART printf 남발로 제어 주기가 흔들리는 문제를 lock-f
 
 링커 관점에서는 버퍼를 `.bss`에 크게 두다 RAM 초과가 나기도 한다. map 파일을 보고 크기를 조정하는 습관이 필요했다.
 
+
+## 주간 이슈 메모 (짧은 노트형)
+ROS 2 / Autoware 생태계 문서 업데이트에서 성능·QoS·TF 주제가 반복적으로 언급
+
+- ROS docs
+  - https://docs.ros.org/
+- Autoware docs
+  - https://autowarefoundation.github.io/autoware-documentation/
+
+로보틱스 스택은 알고리즘 자체보다 데이터 흐름 정책(QoS, frame, timeout)이 체감 성능을 좌우한다. 실무에서 CPU 스파이크와 프레임 드롭은 대개 동일 원인의 다른 표현이다. 그래서 이슈를 분리해서 계측하고, 병목을 노드 단위로 잘라 보는 방식이 가장 재현성이 높다.
+
 ## 참고
 - FreeRTOS stream buffer 문서
 - SEGGER RTT 개요

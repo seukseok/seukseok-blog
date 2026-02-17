@@ -19,7 +19,18 @@ aiSummary: "Voxel grid와 frame transform 병목을 분리해 CPU 스파이크�
 
 트러블슈팅 팁 하나: 빌드 타입이 `Debug`면 Eigen 연산 비용이 크게 보일 수 있다. 성능 측정은 `RelWithDebInfo`로 통일하는 게 안전했다.
 
-완벽한 정답은 아니지만, 포인트클라우드 튜닝은 알고리즘보다 데이터율/좌표변환 정책을 먼저 맞추는 편이 빨랐다.
+정답 하나로 끝나는 문제는 아니지만, 포인트클라우드 튜닝은 알고리즘보다 데이터율/좌표변환 정책을 먼저 맞추는 편이 빨랐다.
+
+
+## 그 주의 기술 이슈 (회고형)
+ROS 2 / Autoware 생태계 문서 업데이트에서 성능·QoS·TF 주제가 반복적으로 언급
+
+- ROS docs
+  - https://docs.ros.org/
+- Autoware docs
+  - https://autowarefoundation.github.io/autoware-documentation/
+
+로보틱스 스택은 알고리즘 자체보다 데이터 흐름 정책(QoS, frame, timeout)이 체감 성능을 좌우한다. 실무에서 CPU 스파이크와 프레임 드롭은 대개 동일 원인의 다른 표현이다. 그래서 이슈를 분리해서 계측하고, 병목을 노드 단위로 잘라 보는 방식이 가장 재현성이 높다.
 
 ## 참고
 - Autoware Universe docs

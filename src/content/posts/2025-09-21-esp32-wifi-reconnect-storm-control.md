@@ -24,6 +24,17 @@ vTaskDelay(pdMS_TO_TICKS(retry_ms));
 
 자주 놓치는 빌드 포인트도 있었다. ESP-IDF 버전이 바뀌면서 이벤트 enum 이름이 바뀐 구간이 있어 컴파일 에러가 났다. 이건 릴리스 노트 확인이 빠르다.
 
+
+## 이번 주 기술 이슈 (문제-해결형)
+ROS 2 / Autoware 생태계 문서 업데이트에서 성능·QoS·TF 주제가 반복적으로 언급
+
+- ROS docs
+  - https://docs.ros.org/
+- Autoware docs
+  - https://autowarefoundation.github.io/autoware-documentation/
+
+로보틱스 스택은 알고리즘 자체보다 데이터 흐름 정책(QoS, frame, timeout)이 체감 성능을 좌우한다. 실무에서 CPU 스파이크와 프레임 드롭은 대개 동일 원인의 다른 표현이다. 그래서 이슈를 분리해서 계측하고, 병목을 노드 단위로 잘라 보는 방식이 가장 재현성이 높다.
+
 ## 참고
 - ESP-IDF Wi-Fi Programming Guide
 - MQTT 3.1.1 spec (reconnect behavior는 구현체 의존, 확인 필요)

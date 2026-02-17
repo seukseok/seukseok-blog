@@ -20,6 +20,17 @@ aiSummary: "로봇 IMU 바이어스가 온도에 따라 떠서 자세 추정이 
 
 주의할 점은 센서별로 온도 응답이 달라서, 다른 로트/모델에 그대로 복사하면 오히려 나빠질 수 있다. 이건 반드시 재측정이 필요하다.
 
+
+## 이번 주 기술 이슈 (문제-해결형)
+GCC/LLVM 릴리즈 노트에서 최적화·경고 동작 변경이 누적된 시기
+
+- GCC news
+  - https://gcc.gnu.org/
+- LLVM release notes
+  - https://releases.llvm.org/
+
+컴파일러 업데이트는 성능 향상과 동시에 경고 승격, 인라이닝 정책, LTO 동작 변화를 가져온다. 즉 코드가 틀려서가 아니라 도구가 더 엄격해져 실패하는 빌드가 늘 수 있다. 따라서 warning-as-error를 유지하는 팀일수록 버전 업그레이드 전후 로그를 비교 저장해 두는 습관이 중요하다.
+
 ## 참고
 - MEMS IMU datasheet 온도 특성 항목
 - Robot Localization / EKF 관련 자료

@@ -36,6 +36,17 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 크로스 컴파일에서 "빌드 성공"은 절반만 끝난 상태다. 실제로는 동적 로더 기준으로 실행 경로를 검증해야 마무리가 된다.
 
+
+## 이번 주 기술 이슈 (짧은 노트형)
+CMake 4.0 전환 논의가 본격화되면서 cross-compile/RPATH 관련 정책 정리가 다시 이슈였다.
+
+- CMake release notes (4.x 계열, 세부 버전 확인 필요)
+  - https://cmake.org/cmake/help/latest/release/
+- Kitware 공식 문서: RPATH 속성
+  - https://cmake.org/cmake/help/latest/prop_tgt/INSTALL_RPATH.html
+
+툴체인이 여러 개인 임베디드 환경에서는 RPATH가 한 번만 어긋나도 런타임에서 `cannot open shared object file`로 바로 터진다. 빌드 성공이 곧 배포 성공이 아니라는 사실을 가장 먼저 보여 주는 지점이기도 하다. 그래서 cross 파일, sysroot, install rpath를 한 번에 점검하는 체크리스트가 실제 복구 시간을 크게 줄인다.
+
 ## 참고
 - CMake RPATH 변수 문서
 - `ld.so` 매뉴얼 (man7.org)

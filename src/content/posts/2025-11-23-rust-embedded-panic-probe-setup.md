@@ -34,6 +34,17 @@ multiple `panic_impl` found
 
 Rust 임베디드 디버깅은 런타임 관측 채널을 먼저 만드는 게 핵심이었다.
 
+
+## 이번 주 기술 이슈 (문제-해결형)
+Linux kernel 안정화 릴리즈와 드라이버 수정이 연속 반영된 기간
+
+- Kernel.org releases
+  - https://www.kernel.org/
+- LWN kernel coverage
+  - https://lwn.net/Kernel/
+
+커널/드라이버 계층 이슈는 애플리케이션 로그에서 직접 드러나지 않아 원인 추적이 늦어진다. 그래서 런타임 문제를 볼 때도 dmesg, irq 통계, DMA 에러 카운터를 함께 보아야 한다. 특히 시리얼·네트워크·스토리지처럼 I/O 경계에서 발생하는 지연은 상위 스택 튜닝만으로 해결되지 않는 경우가 많다.
+
 ## 참고
 - The Embedded Rust Book
 - probe-rs 문서

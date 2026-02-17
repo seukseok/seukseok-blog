@@ -27,6 +27,17 @@ RuntimeError: CUDA out of memory
 
 OOM은 단순 용량 부족이 아닐 때가 많다. 메모리 패턴을 먼저 보는 게 맞았다.
 
+
+## 그 주의 기술 이슈 (회고형)
+Python 3.14 릴리즈 트랙(베타/RC/최종) 업데이트가 이어진 시기
+
+- Python release page
+  - https://www.python.org/downloads/
+- What's New in Python 3.14
+  - https://docs.python.org/3/whatsnew/3.14.html
+
+언어/런타임 업그레이드는 문법보다 C-API, wheel 호환성, CI 이미지 갱신에서 먼저 부딪힌다. 따라서 기능 확인보다 빌드 파이프라인의 의존성 핀 버전을 먼저 점검하는 게 안전하다. 특히 임베디드/엣지 환경은 시스템 Python과 충돌이 잦아 가상환경 재현 스크립트가 사실상 운영 문서 역할을 한다. 이 포스트의 트러블슈팅 포인트도 같은 맥락에서 유지했다.
+
 ## 참고
 - PyTorch CUDA memory management 문서
 - NVIDIA CUDA memory best practices

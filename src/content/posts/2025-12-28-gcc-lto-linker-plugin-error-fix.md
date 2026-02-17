@@ -30,6 +30,17 @@ RANLIB = arm-none-eabi-gcc-ranlib
 
 LTO는 이득이 크지만 툴체인 버전 정합을 못 지키면 바로 발목 잡는다.
 
+
+## 주간 이슈 메모 (짧은 노트형)
+Linux kernel 안정화 릴리즈와 드라이버 수정이 연속 반영된 기간
+
+- Kernel.org releases
+  - https://www.kernel.org/
+- LWN kernel coverage
+  - https://lwn.net/Kernel/
+
+커널/드라이버 계층 이슈는 애플리케이션 로그에서 직접 드러나지 않아 원인 추적이 늦어진다. 그래서 런타임 문제를 볼 때도 dmesg, irq 통계, DMA 에러 카운터를 함께 보아야 한다. 특히 시리얼·네트워크·스토리지처럼 I/O 경계에서 발생하는 지연은 상위 스택 튜닝만으로 해결되지 않는 경우가 많다.
+
 ## 참고
 - GCC LTO 문서
 - GNU ld plugin docs

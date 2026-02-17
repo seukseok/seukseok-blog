@@ -37,7 +37,18 @@ undefined reference to `HAL_UARTEx_RxEventCallback`
 
 원인은 C++ 파일에서 콜백을 구현했는데 `extern "C"`를 안 붙여서 심볼이 바뀐 케이스였다.
 
-결론은 이거다. UART DMA가 가끔 멈춘다면 버퍼 크기보다 먼저 프레임 경계(IDLE)와 재arm 순서를 의심하는 게 훨씬 빠르다.
+현장에서 바로 써먹은 포인트를 남기면 아래와 같다. UART DMA가 가끔 멈춘다면 버퍼 크기보다 먼저 프레임 경계(IDLE)와 재arm 순서를 의심하는 게 훨씬 빠르다.
+
+
+## 주간 이슈 메모 (문제-해결형)
+STM32Cube HAL의 `HAL_UARTEx_ReceiveToIdle_DMA` 활용 사례가 커뮤니티/포럼에서 다시 주목받은 시기였다.
+
+- ST Community: UART DMA + IDLE 수신 패턴 토론 (2025년 하반기 스레드 다수)
+  - https://community.st.com/
+- STM32 HAL UARTEx API 문서
+  - https://dev.st.com/stm32cube-docs/
+
+핵심은 DMA 완료 인터럽트 하나로 프레임 경계를 확정하려는 접근이 실제 라인 공백(jitter, gap)에 취약하다는 점이다. IDLE 기반 수신은 하드웨어 이벤트를 경계로 삼기 때문에, 파서가 패킷 길이를 추론하느라 복잡해지는 비용을 줄여 준다. 특히 ISR/콜백에서 재arm 순서를 고정하면 재현이 어려운 유실 버그를 빠르게 줄일 수 있다. 날짜 단위의 최초 이슈 제기는 포럼 스레드별로 달라 세부 타임라인은 확인이 필요하다.
 
 ## 참고
 - ST AN3109 (STM32 USART 소개)

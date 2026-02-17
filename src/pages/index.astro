@@ -3,9 +3,15 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostList from '../components/PostList.astro';
 
-const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
-);
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => {
+  const dateDiff = b.data.pubDate.getTime() - a.data.pubDate.getTime();
+  if (dateDiff !== 0) return dateDiff;
+
+  const updatedDiff = (b.data.updatedDate?.getTime() ?? 0) - (a.data.updatedDate?.getTime() ?? 0);
+  if (updatedDiff !== 0) return updatedDiff;
+
+  return b.slug.localeCompare(a.slug);
+});
 
 const jsonLd = {
   '@context': 'https://schema.org',

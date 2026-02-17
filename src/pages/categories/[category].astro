@@ -15,9 +15,15 @@ if (!category || !categories.includes(category as (typeof categories)[number])) 
   throw new Error('Invalid category');
 }
 
-const posts = (await getCollection('posts', ({ data }) => !data.draft && data.category === category)).sort(
-  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
-);
+const posts = (await getCollection('posts', ({ data }) => !data.draft && data.category === category)).sort((a, b) => {
+  const dateDiff = b.data.pubDate.getTime() - a.data.pubDate.getTime();
+  if (dateDiff !== 0) return dateDiff;
+
+  const updatedDiff = (b.data.updatedDate?.getTime() ?? 0) - (a.data.updatedDate?.getTime() ?? 0);
+  if (updatedDiff !== 0) return updatedDiff;
+
+  return b.slug.localeCompare(a.slug);
+});
 ---
 
 <BaseLayout title={`${category} | seukseok의 개인 블로그`} description={`${category} 카테고리 글 목록`}>

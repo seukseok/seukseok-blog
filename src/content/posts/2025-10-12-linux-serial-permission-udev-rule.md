@@ -1,0 +1,35 @@
+---
+title: "리눅스에서 USB 시리얼 권한 문제를 udev로 끝낸 설정"
+description: "재부팅할 때마다 /dev/ttyUSB 권한이 바뀌는 문제를 udev rule로 고정한 방법을 짧게 정리."
+pubDate: 2025-10-12
+category: "tech"
+tags: ["Linux", "udev", "Embedded", "Troubleshooting"]
+draft: false
+aiSummary: "재부팅할 때마다 /dev/ttyUSB 권한이 바뀌는 문제를 udev rule로 고정한 방법을 짧게 정리."
+---
+
+`/dev/ttyUSB0`가 어떤 날은 열리고 어떤 날은 `Permission denied`가 났다.
+
+임시로 `sudo chmod 666`을 쓰면 당장은 되지만 재연결하면 원복된다. 결국 udev rule이 정석이다.
+
+```bash
+sudo tee /etc/udev/rules.d/99-serial.rules <<'EOF'
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0660", GROUP:="dialout"
+EOF
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+
+그리고 사용자 계정이 `dialout` 그룹에 들어있는지 확인:
+
+```bash
+id $USER
+```
+
+여기서 자주 헷갈리는 포인트는 `ATTR`와 `ATTRS`다. 부모 디바이스 속성을 볼 때는 보통 `ATTRS`가 맞다.
+
+컴파일 이슈는 아니지만, 런타임 접근 실패를 계속 코드 문제로 오해하기 쉬운 케이스라서 체크리스트에 넣어두면 좋다.
+
+## 참고
+- ArchWiki udev
+- `man 7 udev`

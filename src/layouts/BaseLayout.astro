@@ -58,20 +58,8 @@ const canonicalURL = canonical ?? url.toString();
       <slot />
     </main>
     <footer class="container footer">
-      © {new Date().getFullYear()} seukseok.dev · 방문 <span id="site-visit-count">-</span>
+      © {new Date().getFullYear()} seukseok.dev
     </footer>
-    <script is:inline>
-      (async () => {
-        try {
-          const key = `${location.hostname.replace(/\./g, '-')}:site-total`;
-          const url = `https://api.countapi.xyz/hit/${encodeURIComponent(key)}/visits`;
-          const res = await fetch(url, { method: 'GET' });
-          const data = await res.json();
-          const el = document.getElementById('site-visit-count');
-          if (el && typeof data?.value === 'number') el.textContent = data.value.toLocaleString('ko-KR');
-        } catch (_) {}
-      })();
-    </script>
   </body>
 </html>
 
